@@ -46,9 +46,26 @@
                   <Font name="DIN Alternate Bold" size="27.0" />
                </font>
             </Label>
-            <DatePicker fx:id="dateSearch" prefHeight="27.0" prefWidth="258.0" promptText="Välj datum" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+            <DatePicker fx:id="dateSearch" onAction="#checkValidDate" prefHeight="27.0" prefWidth="258.0" promptText="Välj datum" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
             <ListView fx:id="lw_SearchResults" blendMode="MULTIPLY" maxHeight="200.0" prefHeight="46.0" prefWidth="421.0" visible="false" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4" GridPane.valignment="TOP" />
          </children>
       </GridPane>
+      <MenuBar fx:id="menuBar" prefHeight="29.0" prefWidth="1312.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Menyval">
+            <items>
+                  <MenuItem mnemonicParsing="false" onAction="#doSearchAvailableRooms" text="Sök lediga rum" />
+                  <MenuItem mnemonicParsing="false" text="Visa bokade rum" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+              <MenuItem mnemonicParsing="false" text="Avsluta" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Hjälp">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
    </children>
 </Pane>
