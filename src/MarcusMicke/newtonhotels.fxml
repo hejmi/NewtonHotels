@@ -13,7 +13,7 @@
             <Image url="@newtonhotels.png" />
          </image>
       </ImageView>
-      <GridPane fx:id="availableRoomsSearch" layoutX="363.0" layoutY="214.0" prefHeight="515.0" prefWidth="576.0">
+      <GridPane fx:id="availableRoomsSearch" layoutX="363.0" layoutY="214.0" prefHeight="515.0" prefWidth="576.0" visible="false">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.0" minWidth="10.0" prefWidth="79.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="283.0" minWidth="10.0" prefWidth="158.0" />
@@ -41,9 +41,9 @@
             </Label>
             <TextField fx:id="numNightsText" maxWidth="100.0" prefHeight="27.0" prefWidth="100.0" promptText="Ange antal nätter" text="1" GridPane.columnIndex="3" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
             <Button fx:id="buttonSearchAvailableRooms" mnemonicParsing="false" onAction="#searchAvailableRooms" text="Sök lediga rum" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
-            <Label text="Sök lediga rum" textFill="WHITE" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.valignment="BOTTOM">
+            <Label prefHeight="64.0" prefWidth="416.0" text="Sök lediga rum" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.valignment="BOTTOM">
                <font>
-                  <Font name="DIN Alternate Bold" size="27.0" />
+                  <Font name="DIN Alternate Bold" size="34.0" />
                </font>
             </Label>
             <DatePicker fx:id="dateSearch" onAction="#checkValidDate" prefHeight="27.0" prefWidth="258.0" promptText="Välj datum" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
@@ -55,7 +55,7 @@
           <Menu mnemonicParsing="false" text="Menyval">
             <items>
                   <MenuItem mnemonicParsing="false" onAction="#doSearchAvailableRooms" text="Sök lediga rum" />
-                  <MenuItem mnemonicParsing="false" text="Visa bokade rum" />
+                  <MenuItem mnemonicParsing="false" onAction="#doSearchReservation" text="Sök reservation" />
                   <SeparatorMenuItem mnemonicParsing="false" />
               <MenuItem mnemonicParsing="false" text="Avsluta" />
             </items>
@@ -67,5 +67,42 @@
           </Menu>
         </menus>
       </MenuBar>
+      <GridPane fx:id="searchReservation" layoutX="363.0" layoutY="214.0" prefHeight="515.0" prefWidth="576.0">
+         <children>
+            <Label text="Incheckningsdatum:" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+               <font>
+                  <Font name="DIN Alternate Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label text="Gästens efternamn:" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+               <font>
+                  <Font name="DIN Alternate Bold" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtLastName" maxWidth="100.0" prefHeight="27.0" prefWidth="100.0" promptText="Efternamn" GridPane.columnIndex="3" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
+            <Button fx:id="buttonSearchReservation" mnemonicParsing="false" onAction="#searchReservationClicked" text="Sök lediga rum" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
+            <Label prefHeight="64.0" prefWidth="416.0" text="Sök reservation" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.valignment="BOTTOM">
+               <font>
+                  <Font name="DIN Alternate Bold" size="34.0" />
+               </font>
+            </Label>
+            <DatePicker fx:id="dateSearchReservation" onAction="#checkValidDate" prefHeight="27.0" prefWidth="258.0" promptText="Välj datum" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+            <ListView fx:id="lw_ReservationResult" blendMode="MULTIPLY" maxHeight="200.0" prefHeight="46.0" prefWidth="421.0" visible="false" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4" GridPane.valignment="TOP" />
+         </children>
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.0" minWidth="10.0" prefWidth="79.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="283.0" minWidth="10.0" prefWidth="158.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="283.0" minWidth="5.0" prefWidth="16.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="266.0" minWidth="10.0" prefWidth="250.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="130.0" minWidth="10.0" prefWidth="79.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="185.0" minHeight="10.0" prefHeight="175.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="199.0" minHeight="0.0" prefHeight="18.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="176.0" minHeight="0.0" prefHeight="28.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="221.0" minHeight="7.0" prefHeight="7.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="258.0" minHeight="10.0" prefHeight="258.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
    </children>
 </Pane>

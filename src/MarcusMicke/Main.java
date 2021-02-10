@@ -21,6 +21,7 @@ public class Main extends Application {
         primaryStage.show();
         Controller.controller.dateSearch.setValue(LocalDate.now());
         Controller.controller.availableRoomsSearch.setVisible(false);
+        Controller.controller.searchReservation.setVisible(false);
     }
 
     public static void main(String[] args) {
