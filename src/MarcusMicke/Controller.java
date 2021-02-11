@@ -7,14 +7,12 @@ Code: Michael Hejl
 
  */
 
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
@@ -27,7 +25,6 @@ public class Controller {
     public Controller(){
         controller = this;
     }
-    Main main;
 
     @FXML DatePicker dateSearch;
     @FXML DatePicker dateSearchReservation;
@@ -56,7 +53,7 @@ public class Controller {
     }
 
     public static Connection SQLConnection() throws ClassNotFoundException, SQLException {
-        Connection conn = null;
+        Connection conn;
         Properties props = getConnectionData();
         String url = props.getProperty("db.url");
         String username = props.getProperty("db.user");
@@ -67,7 +64,7 @@ public class Controller {
         return conn;
     }
 
-    public void doLogin (Event e) throws NoSuchAlgorithmException {
+    public void doLogin() throws NoSuchAlgorithmException {
         if(loginUsernameField.getText().isEmpty() || loginPasswordField.getText().isEmpty()){
             Alert alert = new Alert(Alert.AlertType.WARNING, "Fel!\n\nAnvändarnamn/Lösenord måste anges.", ButtonType.OK);
             alert.setTitle("*** Newton Hotels ***");
@@ -79,7 +76,6 @@ public class Controller {
             int loginID=0;
             int staffID=0;
             Connection conn = null;
-            Statement stmt = null;
             try {
                 conn = SQLConnection();
                 if (conn != null) {
@@ -120,28 +116,28 @@ public class Controller {
             }
         }
     }
-    public void doSearchAvailableRooms (Event e) {
+    public void doSearchAvailableRooms() {
         searchReservation.setVisible(false);
         availableRoomsSearch.setVisible(true);
         lw_SearchResults.getItems().clear();
         numNightsText.clear();
     }
 
-    public void doSearchReservation (Event e) {
+    public void doSearchReservation () {
         availableRoomsSearch.setVisible(false);
         searchReservation.setVisible(true);
         lw_ReservationResult.getItems().clear();
         txtLastName.clear();
     }
 
-    public void checkValidDate (Event e) {
+    public void checkValidDate () {
         if (dateSearch.getValue().isBefore(LocalDate.now())) dateSearch.setValue(LocalDate.now());
     }
 
-    public void searchReservationClicked() throws InvocationTargetException {
+    public void searchReservationClicked() {
         if (dateSearchReservation.getValue() != null && txtLastName.getText() != null) {
             Connection conn = null;
-            Statement stmt = null;
+            Statement stmt;
             try {
                 conn = SQLConnection();
                 if (conn != null) {
@@ -176,7 +172,7 @@ public class Controller {
      * @author Michael
      * @param text input string
      * @return md5 password
-     * @throws NoSuchAlgorithmException
+     * @throws NoSuchAlgorithmException error output
      */
     private static StringBuilder md5Pass(String text) throws NoSuchAlgorithmException {
         MessageDigest md5 = MessageDigest.getInstance("MD5");
@@ -192,7 +188,7 @@ public class Controller {
     public void searchAvailableRooms() throws NumberFormatException {
         if (dateSearch.getValue() != null && Integer.parseInt(numNightsText.getText()) > 0) {
             Connection conn = null;
-            Statement stmt = null;
+            Statement stmt;
             try {
                 conn = SQLConnection();
                 if (conn != null) {

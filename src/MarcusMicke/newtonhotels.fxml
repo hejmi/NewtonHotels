@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
@@ -40,7 +39,7 @@
                   <Font name="DIN Alternate Bold" size="18.0" />
                </font>
             </Label>
-             <Button fx:id="buttonSearchAvailableRooms" mnemonicParsing="false" onAction="#searchAvailableRooms" text="Sök lediga rum" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
+             <Button mnemonicParsing="false" onAction="#searchAvailableRooms" text="Sök lediga rum" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
              <DatePicker fx:id="dateSearch" onAction="#checkValidDate" prefHeight="27.0" prefWidth="258.0" promptText="Välj datum" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
             <TextField fx:id="numNightsText" maxWidth="100.0" prefHeight="27.0" prefWidth="100.0" promptText="Ange antal nätter" text="1" GridPane.columnIndex="3" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
             <Label prefHeight="64.0" prefWidth="416.0" text="Sök lediga rum" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.valignment="BOTTOM">
@@ -51,7 +50,7 @@
             <ListView fx:id="lw_SearchResults" blendMode="MULTIPLY" maxHeight="200.0" prefHeight="46.0" prefWidth="421.0" visible="false" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4" GridPane.valignment="TOP" />
          </children>
       </GridPane>
-      <MenuBar fx:id="menuBar" prefHeight="29.0" prefWidth="1312.0">
+      <MenuBar prefHeight="29.0" prefWidth="1312.0">
         <menus>
           <Menu mnemonicParsing="false" text="Menyval">
             <items>
@@ -80,7 +79,7 @@
                   <Font name="DIN Alternate Bold" size="18.0" />
                </font>
             </Label>
-             <Button fx:id="buttonSearchReservation" mnemonicParsing="false" onAction="#searchReservationClicked" text="Sök lediga rum" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
+             <Button mnemonicParsing="false" onAction="#searchReservationClicked" text="Sök lediga rum" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
              <DatePicker fx:id="dateSearchReservation" onAction="#checkValidDate" prefHeight="27.0" prefWidth="258.0" promptText="Välj datum" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
             <TextField fx:id="txtLastName" maxWidth="127.0" prefHeight="27.0" prefWidth="127.0" promptText="Ange efternamn" GridPane.columnIndex="3" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
 
@@ -119,13 +118,12 @@
                   <Font name="DIN Alternate Bold" size="18.0" />
                </font>
             </Label>
-            <Button fx:id="buttonLogin" mnemonicParsing="false" onAction="#doLogin" text="Logga in" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="TOP" />
+            <Button mnemonicParsing="false" onAction="#doLogin" text="Logga in" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="TOP" />
             <Label prefHeight="64.0" prefWidth="416.0" text="Logga in" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.valignment="BOTTOM">
                <font>
                   <Font name="DIN Alternate Bold" size="34.0" />
                </font>
             </Label>
-            <ListView fx:id="lw_ReservationResult1" blendMode="MULTIPLY" maxHeight="200.0" prefHeight="46.0" prefWidth="421.0" visible="false" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4" GridPane.valignment="TOP" />
             <TextField fx:id="loginUsernameField" maxWidth="269.0" prefHeight="27.0" prefWidth="269.0" promptText="Ange användarnamn" GridPane.columnIndex="3" GridPane.rowIndex="1" />
             <PasswordField fx:id="loginPasswordField" promptText="Ange lösenord" GridPane.columnIndex="3" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
          </children>
