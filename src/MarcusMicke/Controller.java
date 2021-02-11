@@ -15,6 +15,8 @@ import javafx.scene.layout.GridPane;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.Properties;
@@ -31,10 +33,16 @@ public class Controller {
     @FXML DatePicker dateSearchReservation;
     @FXML TextField numNightsText;
     @FXML TextField txtLastName;
+    @FXML TextField loginUsernameField;
+    @FXML PasswordField loginPasswordField;
     @FXML ListView<String> lw_SearchResults;
     @FXML ListView<String> lw_ReservationResult;
     @FXML GridPane availableRoomsSearch;
     @FXML GridPane searchReservation;
+    @FXML GridPane loginGrid;
+    @FXML MenuItem menuItemSearchReservation;
+    @FXML MenuItem menuItemSearchAvailableRooms;
+
 
     public static Properties getConnectionData() {
         Properties props = new Properties();
@@ -58,13 +66,72 @@ public class Controller {
         conn = DriverManager.getConnection(url, username, password);
         return conn;
     }
-    public void doSearchReservation (Event e) {
-        availableRoomsSearch.setVisible(false);
-        searchReservation.setVisible(true);
+
+    public void doLogin (Event e) throws NoSuchAlgorithmException {
+        if(loginUsernameField.getText().isEmpty() || loginPasswordField.getText().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Fel!\n\nAnvändarnamn/Lösenord måste anges.", ButtonType.OK);
+            alert.setTitle("*** Newton Hotels ***");
+            alert.setHeaderText("Inloggning till systemet");
+            alert.showAndWait();
+        } else {
+            String username = loginUsernameField.getText();
+            StringBuilder password = md5Pass(loginPasswordField.getText());
+            int loginID=0;
+            int staffID=0;
+            Connection conn = null;
+            Statement stmt = null;
+            try {
+                conn = SQLConnection();
+                if (conn != null) {
+                    PreparedStatement pstmt = conn.prepareStatement("SELECT loginID, staffID FROM Hotels.StaffLogin WHERE username=? AND password=?");
+                    pstmt.setString(1, username);
+                    pstmt.setString(2, password.toString());
+                    ResultSet rs = pstmt.executeQuery();
+                    while (rs.next()) {
+                        loginID = rs.getInt("loginID");
+                        staffID = rs.getInt("staffID");
+                    }
+                }
+            } catch (SQLException | ClassNotFoundException ex) {
+                ex.printStackTrace();
+            } finally {
+                try {
+                    if (conn != null && !conn.isClosed()) {
+                        conn.close();
+                    }
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            if(staffID>0 && loginID>0) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Välkommen!\n\nVar vänlig och använd menyn för att navigera bland systemets funktioner.", ButtonType.OK);
+                alert.setTitle("*** Newton Hotels ***");
+                alert.setHeaderText("Inloggning till systemet");
+                alert.showAndWait();
+
+                menuItemSearchAvailableRooms.setDisable(false);
+                menuItemSearchReservation.setDisable(false);
+                loginGrid.setVisible(false);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Fel!\n\nFel användarnamn eller lösenord har angivits.\nVänligen försök igen.", ButtonType.OK);
+                alert.setTitle("*** Newton Hotels ***");
+                alert.setHeaderText("Inloggning till systemet");
+                alert.showAndWait();
+            }
+        }
     }
     public void doSearchAvailableRooms (Event e) {
         searchReservation.setVisible(false);
         availableRoomsSearch.setVisible(true);
+        lw_SearchResults.getItems().clear();
+        numNightsText.clear();
+    }
+
+    public void doSearchReservation (Event e) {
+        availableRoomsSearch.setVisible(false);
+        searchReservation.setVisible(true);
+        lw_ReservationResult.getItems().clear();
+        txtLastName.clear();
     }
 
     public void checkValidDate (Event e) {
@@ -102,6 +169,24 @@ public class Controller {
                 }
             }
         }
+    }
+
+    /**
+     * Builds a md5-hash of password
+     * @author Michael
+     * @param text input string
+     * @return md5 password
+     * @throws NoSuchAlgorithmException
+     */
+    private static StringBuilder md5Pass(String text) throws NoSuchAlgorithmException {
+        MessageDigest md5 = MessageDigest.getInstance("MD5");
+        md5.update(text.getBytes());
+        byte[] md5Password = md5.digest();
+        StringBuilder sb = new StringBuilder();
+        for (byte b : md5Password) {
+            sb.append(String.format("%02x", b & 0xff));
+        }
+        return sb;
     }
 
     public void searchAvailableRooms() throws NumberFormatException {
