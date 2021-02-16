@@ -39,6 +39,7 @@ public class Controller {
     @FXML GridPane loginGrid;
     @FXML MenuItem menuItemSearchReservation;
     @FXML MenuItem menuItemSearchAvailableRooms;
+    @FXML Label labelLoginInfo;
 
 
     public static Properties getConnectionData() {
@@ -87,6 +88,13 @@ public class Controller {
                         loginID = rs.getInt("loginID");
                         staffID = rs.getInt("staffID");
                     }
+                    pstmt = conn.prepareStatement("EXEC FetchStaffData @staffid=?");
+                    pstmt.setInt(1, staffID);
+                    rs = pstmt.executeQuery();
+                    while (rs.next()) {
+                        labelLoginInfo.setText("Inloggad:   " + rs.getString("name") + ", " + rs.getString("pos"));
+                    }
+
                 }
             } catch (SQLException | ClassNotFoundException ex) {
                 ex.printStackTrace();
@@ -120,6 +128,7 @@ public class Controller {
         searchReservation.setVisible(false);
         availableRoomsSearch.setVisible(true);
         lw_SearchResults.getItems().clear();
+        lw_SearchResults.setVisible(false);
         numNightsText.clear();
     }
 
@@ -127,6 +136,7 @@ public class Controller {
         availableRoomsSearch.setVisible(false);
         searchReservation.setVisible(true);
         lw_ReservationResult.getItems().clear();
+        lw_ReservationResult.setVisible(false);
         txtLastName.clear();
     }
 
@@ -185,34 +195,46 @@ public class Controller {
         return sb;
     }
 
-    public void searchAvailableRooms() throws NumberFormatException {
-        if (dateSearch.getValue() != null && Integer.parseInt(numNightsText.getText()) > 0) {
+    public void searchAvailableRooms() {
+        if (dateSearch.getValue() != null && numNightsText.getText() != null) {
             Connection conn = null;
+            int numofnights = 0;
             Statement stmt;
             try {
-                conn = SQLConnection();
-                if (conn != null) {
-                    stmt = conn.createStatement();
-                    String sql;
-                    sql = "EXEC CheckAvailableRooms @from='"+dateSearch.getValue()+"', @nights="+numNightsText.getText();
-                    ResultSet rs = stmt.executeQuery(sql);
-                    lw_SearchResults.getItems().clear();
-                    lw_SearchResults.setVisible(true);
-                    lw_SearchResults.getItems().add("Rum  \tPris/natt  \tRumstyp");
-                    while (rs.next()) {
-                        lw_SearchResults.getItems().add(rs.getString("Rum") + " \t" + rs.getInt("Pris") + ":- \t\t" + rs.getString("Rumstyp"));
-                    }
-                }
-
-            } catch (SQLException | ClassNotFoundException ex) {
-                ex.printStackTrace();
-            } finally {
+                numofnights = Integer.parseInt(numNightsText.getText());
+            } catch (NumberFormatException e) {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Fältet med antal nätter får endast innehålla ett numeriskt värde", ButtonType.OK);
+                alert.setTitle("*** Newton Hotels ***");
+                alert.setHeaderText("Sök lediga rum");
+                alert.showAndWait();
+                numNightsText.clear();
+            }
+            if (numofnights>0) {
                 try {
-                    if (conn != null && !conn.isClosed()) {
-                        conn.close();
+                    conn = SQLConnection();
+                    if (conn != null) {
+                        stmt = conn.createStatement();
+                        String sql;
+                        sql = "EXEC CheckAvailableRooms @from='" + dateSearch.getValue() + "', @nights=" + numNightsText.getText();
+                        ResultSet rs = stmt.executeQuery(sql);
+                        lw_SearchResults.getItems().clear();
+                        lw_SearchResults.setVisible(true);
+                        lw_SearchResults.getItems().add("Rum  \tPris/natt  \tRumstyp");
+                        while (rs.next()) {
+                            lw_SearchResults.getItems().add(rs.getString("Rum") + " \t" + rs.getInt("Pris") + ":- \t\t" + rs.getString("Rumstyp"));
+                        }
                     }
-                } catch (SQLException ex) {
+
+                } catch (SQLException | ClassNotFoundException ex) {
                     ex.printStackTrace();
+                } finally {
+                    try {
+                        if (conn != null && !conn.isClosed()) {
+                            conn.close();
+                        }
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
                 }
             }
         }

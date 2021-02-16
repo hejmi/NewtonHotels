@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="738.0" prefWidth="1312.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MarcusMicke.Controller">
+<Pane centerShape="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="738.0" prefWidth="1312.0" scaleShape="false" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MarcusMicke.Controller">
    <children>
       <ImageView fitHeight="738.0" fitWidth="1312.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -79,7 +80,7 @@
                   <Font name="DIN Alternate Bold" size="18.0" />
                </font>
             </Label>
-             <Button mnemonicParsing="false" onAction="#searchReservationClicked" text="Sök lediga rum" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
+             <Button mnemonicParsing="false" onAction="#searchReservationClicked" text="Sök reservation" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
              <DatePicker fx:id="dateSearchReservation" onAction="#checkValidDate" prefHeight="27.0" prefWidth="258.0" promptText="Välj datum" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
             <TextField fx:id="txtLastName" maxWidth="127.0" prefHeight="27.0" prefWidth="127.0" promptText="Ange efternamn" GridPane.columnIndex="3" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
 
@@ -143,5 +144,6 @@
             <RowConstraints maxHeight="258.0" minHeight="10.0" prefHeight="258.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
+      <Label fx:id="labelLoginInfo" alignment="TOP_RIGHT" layoutX="853.0" layoutY="32.0" prefHeight="22.0" prefWidth="452.0" />
    </children>
 </Pane>
